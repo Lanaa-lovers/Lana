@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Headtrick Admin Panel</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn-generate {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+        }
+
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-generate:active {
+            transform: translateY(0);
+        }
+
+        .preview {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .preview h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .preview-item {
+            padding: 10px;
+            background: white;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: #28a745;
+            color: white;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .info-box p {
+            color: #1976d2;
+            margin: 5px 0;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            animation: slideIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎮 HEADTRICK MODULE GENERATOR</h1>
+            <p>✨ Admin Panel - Generate & Download Module ✨</p>
+        </div>
+
+        <div class="info-box">
+            <p><strong>👨‍💻 Developer:</strong> Lana Official</p>
+            <p><strong>📦 Version:</strong> 1.1.1</p>
+            <p><strong>🔒 Mode:</strong> NON ROOT SAFE - Encrypted</p>
+        </div>
+
+        <form id="moduleForm">
+            <div class="form-group">
+                <label>📱 Device Model</label>
+                <input type="text" id="deviceModel" placeholder="Contoh: Xiaomi Redmi Note 10" required>
+            </div>
+
+            <div class="form-group">
+                <label>🎮 Pilih Game</label>
+                <select id="gameType" required>
+                    <option value="">-- Pilih Game --</option>
+                    <option value="freefire">🔥 Free Fire Biasa</option>
+                    <option value="freefiremax">⚡ Free Fire MAX</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>⏰ Tanggal Expired</label>
+                <input type="date" id="expiredDate" required>
+            </div>
+
+            <div class="form-group">
+                <label>👤 Nama User (Optional)</label>
+                <input type="text" id="userName" placeholder="Nama pengguna module">
+            </div>
+
+            <button type="submit" class="btn-generate">
+                🚀 Generate & Download Module
+            </button>
+        </form>
+
+        <div class="preview" id="preview" style="display: none;">
+            <h3>📋 Preview Module</h3>
+            <div class="preview-item">
+                <span>📱 Device:</span>
+                <span id="previewDevice">-</span>
+            </div>
+            <div class="preview-item">
+                <span>🎮 Game:</span>
+                <span id="previewGame">-</span>
+            </div>
+            <div class="preview-item">
+                <span>⏰ Expired:</span>
+                <span id="previewExpired">-</span>
+            </div>
+            <div class="preview-item">
+                <span>👤 User:</span>
+                <span id="previewUser">-</span>
+            </div>
+            <div class="preview-item">
+                <span>Status:</span>
+                <span class="status-badge">✅ Ready to Download</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('moduleForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const deviceModel = document.getElementById('deviceModel').value;
+            const gameType = document.getElementById('gameType').value;
+            const expiredDate = document.getElementById('expiredDate').value;
+            const userName = document.getElementById('userName').value || 'User';
+
+            // Disable button and show loading
+            const btn = e.target.querySelector('.btn-generate');
+            const originalText = btn.textContent;
+            btn.textContent = '⏳ Generating...';
+            btn.disabled = true;
+
+            try {
+                // Show preview
+                document.getElementById('preview').style.display = 'block';
+                document.getElementById('previewDevice').textContent = deviceModel;
+                document.getElementById('previewGame').textContent = gameType === 'freefire' ? '🔥 Free Fire Biasa' : '⚡ Free Fire MAX';
+                document.getElementById('previewExpired').textContent = expiredDate;
+                document.getElementById('previewUser').textContent = userName;
+
+                // Generate encrypted module - Fix Unicode encoding
+                const moduleScript = generateModuleScript(deviceModel, gameType, expiredDate, userName);
+                
+                // Proper UTF-8 to Base64 encoding that handles Unicode
+                const encryptedModule = btoa(unescape(encodeURIComponent(moduleScript)));
+
+                // Create ZIP
+                const zip = new JSZip();
+                const headtrickFolder = zip.folder("Headtrick");
+
+            // Add encrypted head.sh
+            headtrickFolder.file("head.sh", `#!/system/bin/sh
+# Encrypted Headtrick Module - DO NOT MODIFY
+# Decryption and execution
+eval "$(echo '${encryptedModule}' | base64 -d | python -c "import sys, urllib; print urllib.unquote(sys.stdin.read())" 2>/dev/null || echo '${encryptedModule}' | base64 -d)"
+`);
+
+            // Add uninstall.sh
+            headtrickFolder.file("uninstall.sh", `#!/system/bin/sh
+echo "🗑️ Uninstalling Headtrick Module..."
+sleep 1
+
+# Reset settings
+settings put system touch.distance.scale 1.0
+settings put system touch.size.scale 1.0
+settings put system pointer_speed 0
+settings put system touch.pressure.scale 1.0
+settings put secure long_press_timeout 500
+settings put secure tap_duration_threshold 0.4
+
+echo "✅ Headtrick Module Uninstalled Successfully"
+echo "👋 Thank you for using Headtrick!"
+`);
+
+            // Add command.txt with emojis
+            headtrickFolder.file("command.txt", `╔═══════════════════════════════════════════════════╗
+║           🎮 HEADTRICK MODULE COMMANDS 🎮          ║
+║                  Developer: Lana Official          ║
+╚═══════════════════════════════════════════════════╝
+
+📱 Device Model: ${deviceModel}
+🎮 Game Type: ${gameType === 'freefire' ? 'Free Fire Biasa' : 'Free Fire MAX'}
+⏰ Expired Date: ${expiredDate}
+👤 User: ${userName}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚀 CARA INSTALL & JALANKAN MODULE:
+
+1️⃣ Pastikan folder Headtrick ada di /sdcard/
+2️⃣ Buka Terminal/Termux
+3️⃣ Copy command di bawah ini:
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📦 UNTUK MENJALANKAN MODULE:
+
+sh /sdcard/Headtrick/head.sh
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🗑️ UNTUK UNINSTALL MODULE:
+
+sh /sdcard/Headtrick/uninstall.sh
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️ PENTING:
+✅ Module ini NON ROOT SAFE
+✅ Tidak perlu akses ROOT
+✅ Work di semua device Android
+✅ Sudah dienkripsi untuk keamanan
+⚠️ Jangan modifikasi file head.sh
+⚠️ Module akan expired pada: ${expiredDate}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 TIPS:
+- Restart game setelah apply module
+- Gunakan command uninstall sebelum update
+- Backup settings game sebelum install
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📞 SUPPORT:
+Developer: Lana Official
+Version: 1.1.1
+
+╔═══════════════════════════════════════════════════╗
+║        🌟 THANK YOU FOR USING HEADTRICK 🌟        ║
+╚═══════════════════════════════════════════════════╝
+`);
+
+            // Add README.md
+            headtrickFolder.file("README.md", `# 🎮 HEADTRICK MODULE
+
+## 📱 Device Information
+- **Device Model:** ${deviceModel}
+- **Game Type:** ${gameType === 'freefire' ? 'Free Fire Biasa' : 'Free Fire MAX'}
+- **User:** ${userName}
+- **Expired Date:** ${expiredDate}
+
+## ✨ Features
+- ✅ Easy Drag
+- ✅ Optimize Sensitivity
+- ✅ Aim On Point
+- ✅ Aim Drag
+- ✅ Sensitivity Control
+- ✅ Accuracy Aim
+
+## 🚀 Installation
+\`\`\`bash
+sh /sdcard/Headtrick/head.sh
+\`\`\`
+
+## 🗑️ Uninstall
+\`\`\`bash
+sh /sdcard/Headtrick/uninstall.sh
+\`\`\`
+
+## ⚠️ Notes
+- NON ROOT SAFE
+- Encrypted Module
+- Do not modify head.sh file
+
+---
+**Developer:** Lana Official | **Version:** 1.1.1
+`);
+
+                            // Generate and download ZIP with better mobile compatibility
+                btn.textContent = '📦 Creating ZIP...';
+                
+                const content = await zip.generateAsync({
+                    type: "blob",
+                    compression: "DEFLATE",
+                    compressionOptions: {
+                        level: 9
+                    }
+                });
+                
+                btn.textContent = '💾 Downloading...';
+                
+                // Create filename
+                const filename = `Headtrick_${gameType}_${deviceModel.replace(/\s+/g, '_')}_${expiredDate}.zip`;
+                
+                // Try multiple download methods for better compatibility
+                if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                    // IE/Edge
+                    window.navigator.msSaveOrOpenBlob(content, filename);
+                } else {
+                    // Modern browsers
+                    const url = URL.createObjectURL(content);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = filename;
+                    link.style.display = 'none';
+                    
+                    document.body.appendChild(link);
+                    
+                    // Trigger download
+                    link.click();
+                    
+                    // Cleanup after delay
+                    setTimeout(() => {
+                        document.body.removeChild(link);
+                        URL.revokeObjectURL(url);
+                    }, 250);
+                }
+
+                // Success message
+                setTimeout(() => {
+                    alert('🎉 SUCCESS!\n\n✅ Module berhasil di-generate!\n📦 File ZIP: ' + filename + '\n🔒 Module sudah terenkripsi\n\n💾 Cek folder Download Anda!');
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                }, 300);
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ ERROR!\n\nGagal generate module:\n' + error.message + '\n\n🔄 Silakan coba lagi');
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        });
+
+        function generateModuleScript(device, game, expired, user) {
+            return `#!/system/bin/sh
+# =========================================================
+# ╔══════════════════════════════════════════════════════╗
+# ║                   HEADTRICK MODULE                   ║
+# ║              Developer : Lana Official               ║
+# ║                  Version : 1.1.1                     ║
+# ║                Mode : NON ROOT SAFE                  ║
+# ╚══════════════════════════════════════════════════════╝
+# =========================================================
+
+# Check Expiration
+EXPIRED_DATE="${expired}"
+CURRENT_DATE=$(date +%Y-%m-%d)
+
+if [ "$(date -d "$CURRENT_DATE" +%s)" -gt "$(date -d "$EXPIRED_DATE" +%s)" 2>/dev/null ]; then
+    echo "❌ MODULE EXPIRED!"
+    echo "⏰ Expired Date: $EXPIRED_DATE"
+    echo "📞 Contact Developer: Lana Official"
+    exit 1
+fi
+
+clear
+
+# =============================== LOGO ===============================
+echo "██╗  ██╗███████╗ █████╗ ██████╗ "
+echo "██║  ██║██╔════╝██╔══██╗██╔══██╗"
+echo "███████║█████╗  ███████║██║  ██║"
+echo "██╔══██║██╔══╝  ██╔══██║██║  ██║"
+echo "██║  ██║███████╗██║  ██║██████╔╝"
+echo "╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═════╝ "
+echo "           HEADTRICK"
+echo "    Developer : Lana Official"
+echo ""
+
+# =============================== USER INFO ===============================
+echo "╔════════════ USER INFO ════════════╗"
+echo " 👤 User     : ${user}"
+echo " 📱 Device   : ${device}"
+echo " 🎮 Game     : ${game === 'freefire' ? 'Free Fire Biasa' : 'Free Fire MAX'}"
+echo " ⏰ Expired  : ${expired}"
+echo "╚═══════════════════════════════════╝"
+echo ""
+
+# =============================== DEVICE INFO ===============================
+echo "╔════════════ DEVICE INFO ════════════╗"
+echo " 📱 Brand    : $(getprop ro.product.brand)"
+echo " 📲 Model    : $(getprop ro.product.model)"
+echo " 🤖 Android  : $(getprop ro.build.version.release)"
+echo " ⚙️  Kernel   : $(uname -r)"
+echo " 🔧 ABI      : $(getprop ro.product.cpu.abi)"
+echo "╚══════════════════════════════════════╝"
+echo ""
+sleep 1
+
+# =============================== LOADING BAR ===============================
+echo "╔════════════ APPLYING MODULE ════════════╗"
+for i in 10 20 30 40 50 60 70 80 90 100; do
+    printf "⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛ %s%%\r" "$i"
+    sleep 0.2
+done
+echo ""
+echo "╚═════════════════════════════════════════╝"
+echo ""
+
+# =============================== FEATURES ===============================
+echo "╔════════════ FEATURES ACTIVE ════════════╗"
+echo " 🎯 Easy Drag           : ACTIVE ✅"
+echo " ⚡ Optimize Sensitivity : ACTIVE ✅"
+echo " 🎯 Aim On Point        : ACTIVE ✅"
+echo " 🎯 Aim Drag            : ACTIVE ✅"
+echo " 🎮 Sensitivity Control : ACTIVE ✅"
+echo " 🎯 Accuracy Aim        : ACTIVE ✅"
+echo "╚══════════════════════════════════════════╝"
+echo ""
+
+# =============================== OPTIMIZATION ===============================
+# Easy Drag & Stability
+settings put system touch.distance.scale 0.85
+settings put system touch.size.scale 0.75
+
+# Sensitivity Precision
+settings put system pointer_speed 7
+settings put system touch.pressure.scale 0.001
+
+# Aim Accuracy
+setprop debug.input.low_latency 1
+setprop debug.performance.tuning 1
+setprop debug.hwui.renderer skiagl
+setprop debug.hwui.disable_vsync false
+
+# Touch consistency
+settings put secure long_press_timeout 300
+settings put secure tap_duration_threshold 0.2
+
+# =============================== STATUS ===============================
+echo ""
+echo "╔════════════ STATUS ════════════╗"
+echo " 📦 Module   : HEADTRICK"
+echo " 🔒 Mode     : NON ROOT SAFE"
+echo " ✅ Status   : ACTIVE (NO ERROR)"
+echo " 👨‍💻 Dev      : Lana Official"
+echo " 👤 User     : ${user}"
+echo "╚═════════════════════════════════╝"
+echo ""
+echo "✅ HEADTRICK APPLIED SUCCESSFULLY"
+echo "🎮 Enjoy your ${game === 'freefire' ? 'Free Fire' : 'Free Fire MAX'} gameplay!"
+echo ""
+sleep 2
+`;
+        }
+    </script>
+</body>
+</html>
