@@ -1,551 +1,889 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎮 Headtrick Admin Panel</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 3px solid #667eea;
-        }
-
-        .header h1 {
-            color: #667eea;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .header p {
-            color: #666;
-            font-size: 1.1em;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 8px;
-            font-size: 1.1em;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 1em;
-            transition: all 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .btn-generate {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.2em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            margin-top: 20px;
-        }
-
-        .btn-generate:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-        }
-
-        .btn-generate:active {
-            transform: translateY(0);
-        }
-
-        .preview {
-            margin-top: 30px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border-left: 4px solid #667eea;
-        }
-
-        .preview h3 {
-            color: #667eea;
-            margin-bottom: 15px;
-        }
-
-        .preview-item {
-            padding: 10px;
-            background: white;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 5px 15px;
-            background: #28a745;
-            color: white;
-            border-radius: 20px;
-            font-size: 0.9em;
-        }
-
-        .info-box {
-            background: #e3f2fd;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border-left: 4px solid #2196f3;
-        }
-
-        .info-box p {
-            color: #1976d2;
-            margin: 5px 0;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .container {
-            animation: slideIn 0.5s ease-out;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Admin Rafexce</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<style>
+:root {
+  --blue: #1565C0;
+  --blue-light: #42A5F5;
+  --blue-bright: #00B0FF;
+  --blue-deep: #0D47A1;
+  --black: #050A14;
+  --black2: #080F1E;
+  --black3: #0B1428;
+  --card: rgba(8,15,30,0.95);
+  --card2: rgba(12,20,42,0.9);
+  --text: #E8F4FD;
+  --text2: #7EB8E8;
+  --text3: #3D6B9A;
+  --border: rgba(21,101,192,0.25);
+  --green: #00E676;
+  --red: #FF3D71;
+  --gold: #FFD740;
+  --r: 14px;
+  --rs: 10px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  font-family: 'Exo 2', sans-serif;
+  background: var(--black);
+  color: var(--text);
+  overflow: hidden;
+}
+.bg-mesh {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 40% at 10% 0%, rgba(13,71,161,0.35) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 90% 100%, rgba(0,176,255,0.12) 0%, transparent 60%);
+}
+.bg-grid {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: linear-gradient(rgba(21,101,192,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(21,101,192,0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.app {
+  position: relative; z-index: 1;
+  max-width: 480px; margin: 0 auto;
+  height: 100vh; display: flex; flex-direction: column; overflow: hidden;
+}
+/* TOP BAR */
+.topbar {
+  flex-shrink: 0; display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px 10px;
+  background: rgba(5,10,20,0.85); backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border); position: relative;
+}
+.topbar::after {
+  content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--blue-bright), transparent); opacity: 0.5;
+}
+.brand-name {
+  font-size: 19px; font-weight: 900; letter-spacing: -0.5px;
+  background: linear-gradient(90deg, #42A5F5, #00B0FF, #90CAF9);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.brand-sub { font-size: 9px; color: var(--text3); font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; margin-top: 1px; }
+.owner-pill {
+  display: flex; align-items: center; gap: 6px;
+  background: linear-gradient(135deg, rgba(13,71,161,0.5), rgba(0,176,255,0.1));
+  border: 1px solid rgba(0,176,255,0.3); border-radius: 20px; padding: 5px 11px;
+  font-size: 11px; font-weight: 700; color: #90CAF9;
+}
+.pulse-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green); animation: pls 2s ease-in-out infinite; }
+@keyframes pls { 0%,100%{transform:scale(1);opacity:1}50%{transform:scale(0.7);opacity:0.5} }
+/* PAGES */
+.pages { flex: 1; overflow: hidden; position: relative; }
+.page {
+  position: absolute; inset: 0; overflow-y: auto; overflow-x: hidden;
+  padding-bottom: 90px; opacity: 0; pointer-events: none;
+  transform: translateX(24px); transition: opacity 0.3s, transform 0.3s;
+}
+.page.active { opacity: 1; pointer-events: all; transform: translateX(0); }
+/* STATS */
+.stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; padding: 14px 14px 6px; }
+.stat-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--rs);
+  padding: 12px 8px; text-align: center; cursor: pointer;
+  transition: transform 0.15s; position: relative; overflow: hidden;
+}
+.stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--blue), var(--blue-bright)); }
+.stat-card:active { transform: scale(0.95); }
+.stat-num { font-size: 26px; font-weight: 900; }
+.stat-label { font-size: 9px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px; font-weight: 600; }
+/* SECTION */
+.section { padding: 8px 14px 0; }
+.sec-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.sec-title {
+  font-size: 11px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 1.5px;
+  display: flex; align-items: center; gap: 6px;
+}
+.sec-title::before { content: ''; width: 3px; height: 14px; border-radius: 2px; background: linear-gradient(180deg, var(--blue-bright), var(--blue)); }
+/* USER CARDS */
+.user-list { display: flex; flex-direction: column; gap: 6px; }
+.user-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--r);
+  padding: 12px 14px; display: flex; align-items: center; gap: 12px;
+  transition: background 0.15s; position: relative; overflow: hidden;
+}
+.user-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; }
+.user-card.status-active::before { background: var(--green); }
+.user-card.status-inactive::before { background: var(--red); }
+.user-card:active { background: rgba(21,101,192,0.12); }
+.av { width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0; background: linear-gradient(135deg, var(--blue-deep), var(--blue-light)); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 900; color: #fff; position: relative; }
+.av-dot { position: absolute; bottom: -2px; right: -2px; width: 10px; height: 10px; border-radius: 50%; border: 2px solid #080F1E; }
+.av-dot.on { background: var(--green); box-shadow: 0 0 5px var(--green); }
+.av-dot.off { background: var(--red); }
+.user-info { flex: 1; min-width: 0; }
+.user-uname { font-size: 14px; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.user-meta { display: flex; align-items: center; gap: 5px; margin-top: 3px; flex-wrap: wrap; }
+.chip { display: inline-flex; align-items: center; padding: 2px 7px; border-radius: 10px; font-size: 9px; font-weight: 700; letter-spacing: 0.3px; }
+.chip-active { background: rgba(0,230,118,0.12); color: var(--green); border: 1px solid rgba(0,230,118,0.25); }
+.chip-inactive { background: rgba(255,61,113,0.12); color: var(--red); border: 1px solid rgba(255,61,113,0.25); }
+.chip-vip { background: rgba(255,215,64,0.1); color: var(--gold); border: 1px solid rgba(255,215,64,0.25); }
+.chip-role { background: rgba(0,176,255,0.1); color: var(--blue-bright); border: 1px solid rgba(0,176,255,0.2); }
+.more-btn {
+  background: rgba(21,101,192,0.15); border: 1px solid var(--border); color: var(--text2);
+  cursor: pointer; border-radius: 10px; width: 34px; height: 34px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+}
+.more-btn:active { background: rgba(21,101,192,0.35); transform: scale(0.9); }
+.more-btn .material-icons-round { font-size: 18px; }
+/* ADD CENTER */
+.add-center-wrap {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 28px 20px 10px; gap: 12px;
+}
+.add-illus {
+  width: 80px; height: 80px; border-radius: 24px;
+  background: linear-gradient(135deg, rgba(13,71,161,0.3), rgba(0,176,255,0.1));
+  border: 2px dashed rgba(0,176,255,0.3);
+  display: flex; align-items: center; justify-content: center; position: relative;
+}
+.add-illus::after {
+  content: ''; position: absolute; inset: -6px;
+  border-radius: 28px; border: 1px solid rgba(0,176,255,0.08);
+  animation: rot 8s linear infinite;
+}
+@keyframes rot { from{transform:rotate(0deg)}to{transform:rotate(360deg)} }
+.add-illus .material-icons-round { font-size: 36px; color: var(--blue-bright); }
+.add-center-title { font-size: 15px; font-weight: 800; color: var(--text); }
+.add-center-sub { font-size: 12px; color: var(--text2); text-align: center; line-height: 1.5; }
+.add-center-btn {
+  background: linear-gradient(135deg, var(--blue), var(--blue-bright));
+  color: #fff; border: none; border-radius: 14px;
+  padding: 13px 28px; font-family: 'Exo 2', sans-serif;
+  font-size: 14px; font-weight: 800; cursor: pointer;
+  box-shadow: 0 4px 20px rgba(21,101,192,0.5);
+  display: flex; align-items: center; gap: 8px; transition: all 0.2s;
+}
+.add-center-btn:active { transform: scale(0.95); }
+/* LOGS */
+.log-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin: 0 14px 14px; }
+.log-head { padding: 10px 14px; background: rgba(13,71,161,0.2); border-bottom: 1px solid var(--border); font-size: 11px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 6px; }
+.log-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; border-bottom: 1px solid rgba(21,101,192,0.07); }
+.log-item:last-child { border-bottom: none; }
+.log-icon { width: 32px; height: 32px; border-radius: 9px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.log-icon .material-icons-round { font-size: 15px; }
+.log-msg { font-size: 12px; color: var(--text); font-weight: 600; }
+.log-sub { font-size: 10px; color: var(--text2); margin-top: 1px; }
+.log-time { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text3); white-space: nowrap; }
+/* SETTINGS */
+.settings-section { padding: 14px 14px 0; }
+.settings-group { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin-bottom: 12px; }
+.settings-group-title { padding: 10px 14px; font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 1.5px; border-bottom: 1px solid var(--border); background: rgba(13,71,161,0.15); }
+.setting-item { display: flex; align-items: center; gap: 12px; padding: 13px 14px; border-bottom: 1px solid rgba(21,101,192,0.08); cursor: pointer; transition: background 0.15s; }
+.setting-item:last-child { border-bottom: none; }
+.setting-item:active { background: rgba(21,101,192,0.1); }
+.si-icon { width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.si-icon .material-icons-round { font-size: 18px; }
+.si-text { flex: 1; }
+.si-label { font-size: 13px; font-weight: 700; color: var(--text); }
+.si-desc { font-size: 10px; color: var(--text2); margin-top: 2px; }
+.toggle-sw { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+.toggle-sw input { opacity: 0; width: 0; height: 0; }
+.toggle-sw .sl { position: absolute; inset: 0; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 24px; cursor: pointer; transition: all 0.3s; }
+.toggle-sw .sl::before { content: ''; position: absolute; width: 18px; height: 18px; left: 2px; top: 2px; background: #fff; border-radius: 50%; transition: transform 0.3s; }
+.toggle-sw input:checked + .sl { background: var(--blue); border-color: var(--blue-bright); }
+.toggle-sw input:checked + .sl::before { transform: translateX(20px); }
+/* BOTTOM NAV */
+.nav-wrap {
+  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 480px; z-index: 60;
+}
+.bottom-nav {
+  margin: 0 10px 10px;
+  background: rgba(5,10,20,0.94); backdrop-filter: blur(30px);
+  border: 1px solid rgba(0,176,255,0.15); border-radius: 22px;
+  display: flex; align-items: center; padding: 6px 4px;
+  box-shadow: 0 -4px 30px rgba(0,0,0,0.5), 0 0 0 1px rgba(21,101,192,0.08), inset 0 1px 0 rgba(255,255,255,0.04);
+}
+.nav-item {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  gap: 3px; cursor: pointer; padding: 7px 4px; border-radius: 16px;
+  transition: all 0.25s;
+}
+.ni-icon {
+  width: 38px; height: 38px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center; transition: all 0.3s;
+}
+.nav-item .material-icons-round { font-size: 22px; color: var(--text3); transition: all 0.3s; }
+.ni-label { font-size: 9px; color: var(--text3); font-weight: 700; letter-spacing: 0.3px; text-transform: uppercase; transition: color 0.3s; }
+.nav-item.active .ni-icon {
+  background: linear-gradient(135deg, rgba(13,71,161,0.7), rgba(0,176,255,0.2));
+  border: 1px solid rgba(0,176,255,0.3);
+  box-shadow: 0 2px 12px rgba(21,101,192,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.nav-item.active .material-icons-round { color: var(--blue-bright); filter: drop-shadow(0 0 4px rgba(0,176,255,0.6)); }
+.nav-item.active .ni-label { color: var(--blue-bright); }
+.nav-fab {
+  width: 52px; height: 52px; border-radius: 16px; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--blue), var(--blue-bright));
+  border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px rgba(21,101,192,0.6), 0 0 0 1px rgba(0,176,255,0.3);
+  transition: all 0.2s; position: relative; overflow: hidden;
+}
+.nav-fab::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent); border-radius: inherit; }
+.nav-fab:active { transform: scale(0.92); }
+.nav-fab .material-icons-round { font-size: 24px; color: #fff; z-index: 1; }
+/* BACKDROP */
+.backdrop {
+  position: fixed; inset: 0; z-index: 80;
+  background: rgba(0,0,0,0.72); backdrop-filter: blur(14px);
+  opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.backdrop.show { opacity: 1; pointer-events: all; }
+/* BOTTOM SHEET */
+.bsheet {
+  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%) translateY(110%);
+  width: 100%; max-width: 480px; z-index: 90;
+  background: linear-gradient(180deg, #0A1830 0%, #070E1C 100%);
+  border-top: 1px solid rgba(0,176,255,0.25); border-radius: 24px 24px 0 0;
+  padding: 0 18px 34px;
+  transition: transform 0.38s cubic-bezier(0.34, 1.15, 0.64, 1);
+  box-shadow: 0 -8px 50px rgba(0,0,0,0.6);
+  max-height: 92vh; overflow-y: auto;
+}
+.bsheet.show { transform: translateX(-50%) translateY(0); }
+.sheet-pill { width: 38px; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.12); margin: 12px auto 18px; }
+.sheet-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+.sheet-title { font-size: 17px; font-weight: 800; color: var(--text); }
+.close-btn { width: 32px; height: 32px; border-radius: 50%; border: none; background: rgba(255,255,255,0.07); color: var(--text2); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.close-btn:active { background: rgba(255,255,255,0.15); transform: scale(0.9); }
+.close-btn .material-icons-round { font-size: 16px; }
+/* MENU ITEMS */
+.menu-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 13px 6px; border-bottom: 1px solid rgba(21,101,192,0.08);
+  cursor: pointer; border-radius: 10px; transition: all 0.15s;
+}
+.menu-item:last-child { border-bottom: none; }
+.menu-item:active { background: rgba(21,101,192,0.15); padding-left: 12px; }
+.mi-icon { width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.mi-icon .material-icons-round { font-size: 20px; }
+.mi-text .mt { font-size: 13px; font-weight: 700; color: var(--text); }
+.mi-text .ms { font-size: 10px; color: var(--text2); margin-top: 1px; }
+.mi-arrow { margin-left: auto; color: var(--text3) !important; font-size: 16px !important; }
+/* FORM */
+.form-group { margin-bottom: 14px; }
+.form-label { font-size: 10px; color: var(--text3); font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; display: block; }
+.form-input {
+  width: 100%; background: rgba(13,71,161,0.12); border: 1px solid var(--border);
+  border-radius: 12px; padding: 12px 14px; color: var(--text);
+  font-family: 'Exo 2', sans-serif; font-size: 14px; font-weight: 500; outline: none; transition: border 0.2s, background 0.2s;
+}
+.form-input:focus { border-color: var(--blue-bright); background: rgba(0,176,255,0.08); }
+.form-select {
+  width: 100%; background: rgba(13,71,161,0.12); border: 1px solid var(--border);
+  border-radius: 12px; padding: 12px 14px; color: var(--text);
+  font-family: 'Exo 2', sans-serif; font-size: 14px; font-weight: 500; outline: none; appearance: none; cursor: pointer;
+}
+.form-select option { background: #0B1428; color: #fff; }
+.toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(21,101,192,0.08); }
+.toggle-row:last-of-type { border-bottom: none; }
+.tl-info .tl { font-size: 13px; font-weight: 700; color: var(--text); }
+.tl-info .ts { font-size: 10px; color: var(--text2); margin-top: 1px; }
+.sheet-actions { display: flex; gap: 10px; margin-top: 20px; }
+.btn {
+  padding: 12px 18px; border-radius: 12px; font-family: 'Exo 2', sans-serif;
+  font-size: 13px; font-weight: 800; cursor: pointer; border: none;
+  display: flex; align-items: center; gap: 7px; justify-content: center; transition: all 0.2s;
+}
+.btn:active { transform: scale(0.95); }
+.btn-primary { background: linear-gradient(135deg, var(--blue), var(--blue-bright)); color: #fff; flex: 1; box-shadow: 0 4px 16px rgba(21,101,192,0.5); }
+.btn-outline { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: var(--text2); flex: 1; }
+.btn-danger { background: rgba(255,61,113,0.12); border: 1px solid rgba(255,61,113,0.3); color: var(--red); }
+.btn-icon { font-size: 16px !important; }
+/* DIALOG */
+.dialog-wrap {
+  position: fixed; inset: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  background: rgba(0,0,0,0.72); backdrop-filter: blur(16px); transition: opacity 0.3s;
+}
+.dialog-wrap.show { opacity: 1; pointer-events: all; }
+.dialog {
+  background: linear-gradient(160deg, #0C1830 0%, #080F1E 100%);
+  border: 1px solid rgba(0,176,255,0.2); border-radius: 20px; padding: 24px;
+  width: 88%; max-width: 340px;
+  transform: scale(0.88); transition: transform 0.3s cubic-bezier(0.34,1.3,0.64,1);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+}
+.dialog-wrap.show .dialog { transform: scale(1); }
+.dialog-icon { font-size: 36px; margin-bottom: 10px; text-align: center; }
+.dialog-title { font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 8px; text-align: center; }
+.dialog-body { font-size: 12px; color: var(--text2); line-height: 1.6; text-align: center; margin-bottom: 20px; }
+.dialog-actions { display: flex; gap: 10px; }
+/* TOAST */
+.toast {
+  position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: rgba(13,71,161,0.97); backdrop-filter: blur(20px);
+  border: 1px solid rgba(0,176,255,0.4); border-radius: 14px; padding: 10px 18px;
+  font-size: 12px; font-weight: 700; color: var(--text); z-index: 200;
+  opacity: 0; transition: all 0.3s; display: flex; align-items: center; gap: 8px;
+  white-space: nowrap; max-width: calc(100% - 40px); pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+/* EMPTY */
+.empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px 20px; gap: 10px; }
+.empty-state .material-icons-round { font-size: 44px; color: var(--text3); }
+.empty-state p { font-size: 13px; color: var(--text3); font-weight: 600; }
+::-webkit-scrollbar { width: 0; }
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🎮 HEADTRICK MODULE GENERATOR</h1>
-            <p>✨ Admin Panel - Generate & Download Module ✨</p>
+<div class="bg-mesh"></div>
+<div class="bg-grid"></div>
+
+<div class="app">
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div>
+      <div class="brand-name">Admin Rafexce</div>
+      <div class="brand-sub">Control Panel v2.1</div>
+    </div>
+    <div class="owner-pill">
+      <div class="pulse-dot"></div>
+      Lana Official
+    </div>
+  </div>
+
+  <div class="pages">
+    <!-- DATABASE PAGE -->
+    <div class="page active" id="page-database">
+      <div class="stats-row">
+        <div class="stat-card" onclick="playClick()">
+          <div class="stat-num" style="color:var(--blue-bright)" id="st-total">0</div>
+          <div class="stat-label">Total User</div>
         </div>
-
-        <div class="info-box">
-            <p><strong>👨‍💻 Developer:</strong> Lana Official</p>
-            <p><strong>📦 Version:</strong> 1.1.1</p>
-            <p><strong>🔒 Mode:</strong> NON ROOT SAFE - Encrypted</p>
+        <div class="stat-card" onclick="playClick()">
+          <div class="stat-num" style="color:var(--green)" id="st-active">0</div>
+          <div class="stat-label">Online</div>
         </div>
-
-        <form id="moduleForm">
-            <div class="form-group">
-                <label>📱 Device Model</label>
-                <input type="text" id="deviceModel" placeholder="Contoh: Xiaomi Redmi Note 10" required>
-            </div>
-
-            <div class="form-group">
-                <label>🎮 Pilih Game</label>
-                <select id="gameType" required>
-                    <option value="">-- Pilih Game --</option>
-                    <option value="freefire">🔥 Free Fire Biasa</option>
-                    <option value="freefiremax">⚡ Free Fire MAX</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>⏰ Tanggal Expired</label>
-                <input type="date" id="expiredDate" required>
-            </div>
-
-            <div class="form-group">
-                <label>👤 Nama User (Optional)</label>
-                <input type="text" id="userName" placeholder="Nama pengguna module">
-            </div>
-
-            <button type="submit" class="btn-generate">
-                🚀 Generate & Download Module
-            </button>
-        </form>
-
-        <div class="preview" id="preview" style="display: none;">
-            <h3>📋 Preview Module</h3>
-            <div class="preview-item">
-                <span>📱 Device:</span>
-                <span id="previewDevice">-</span>
-            </div>
-            <div class="preview-item">
-                <span>🎮 Game:</span>
-                <span id="previewGame">-</span>
-            </div>
-            <div class="preview-item">
-                <span>⏰ Expired:</span>
-                <span id="previewExpired">-</span>
-            </div>
-            <div class="preview-item">
-                <span>👤 User:</span>
-                <span id="previewUser">-</span>
-            </div>
-            <div class="preview-item">
-                <span>Status:</span>
-                <span class="status-badge">✅ Ready to Download</span>
-            </div>
+        <div class="stat-card" onclick="playClick()">
+          <div class="stat-num" style="color:var(--gold)" id="st-vip">0</div>
+          <div class="stat-label">VIP</div>
         </div>
+      </div>
+      <div class="section">
+        <div class="sec-hdr">
+          <div class="sec-title">Daftar User</div>
+          <div style="font-size:10px;color:var(--text3);font-family:'JetBrains Mono',monospace" id="last-update">--:--:--</div>
+        </div>
+        <div class="user-list" id="userList"></div>
+      </div>
+      <div class="add-center-wrap">
+        <div class="add-illus"><span class="material-icons-round">person_add</span></div>
+        <div class="add-center-title">Tambah Akun Baru</div>
+        <div class="add-center-sub">Buat akun user dengan username,<br>password, role dan akses VIP</div>
+        <button class="add-center-btn" onclick="openAddSheet()">
+          <span class="material-icons-round" style="font-size:18px">add_circle</span>
+          Buat Akun Sekarang
+        </button>
+      </div>
     </div>
 
-    <script>
-        document.getElementById('moduleForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
+    <!-- LOGS PAGE -->
+    <div class="page" id="page-logs">
+      <div class="section" style="padding-top:14px">
+        <div class="sec-hdr">
+          <div class="sec-title">Activity Logs</div>
+          <button class="btn btn-outline" style="padding:5px 10px;font-size:10px;border-radius:8px;flex:none" onclick="clearLogs()">
+            <span class="material-icons-round" style="font-size:12px">delete_sweep</span> Clear
+          </button>
+        </div>
+      </div>
+      <div class="log-card">
+        <div class="log-head">
+          <span class="material-icons-round" style="font-size:14px;color:var(--blue-bright)">history</span>
+          Recent Activity
+        </div>
+        <div id="logList"></div>
+      </div>
+    </div>
 
-            const deviceModel = document.getElementById('deviceModel').value;
-            const gameType = document.getElementById('gameType').value;
-            const expiredDate = document.getElementById('expiredDate').value;
-            const userName = document.getElementById('userName').value || 'User';
+    <!-- SETTINGS PAGE -->
+    <div class="page" id="page-settings">
+      <div class="settings-section">
+        <div style="padding:16px 0 12px;text-align:center">
+          <div style="width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg,#0D47A1,#00B0FF);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(21,101,192,0.5)">
+            <span class="material-icons-round" style="font-size:32px;color:#fff">admin_panel_settings</span>
+          </div>
+          <div style="font-size:16px;font-weight:800;color:var(--text)">Admin Rafexce</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:2px">v2.1.0 · by Lana Official</div>
+        </div>
 
-            // Disable button and show loading
-            const btn = e.target.querySelector('.btn-generate');
-            const originalText = btn.textContent;
-            btn.textContent = '⏳ Generating...';
-            btn.disabled = true;
+        <div class="settings-group">
+          <div class="settings-group-title">🔒 Keamanan</div>
+          <div class="setting-item" onclick="playClick();showToast('🔑 Change password','lock')">
+            <div class="si-icon" style="background:rgba(21,101,192,0.2)"><span class="material-icons-round" style="color:var(--blue-bright)">lock</span></div>
+            <div class="si-text"><div class="si-label">Ganti Password</div><div class="si-desc">Ubah password admin panel</div></div>
+            <span class="material-icons-round" style="color:var(--text3);font-size:18px">chevron_right</span>
+          </div>
+          <div class="setting-item" onclick="event.stopPropagation()">
+            <div class="si-icon" style="background:rgba(21,101,192,0.2)"><span class="material-icons-round" style="color:var(--blue-bright)">timer</span></div>
+            <div class="si-text"><div class="si-label">Auto Logout</div><div class="si-desc">Logout otomatis saat idle</div></div>
+            <label class="toggle-sw" onclick="playClick()"><input type="checkbox" checked><span class="sl"></span></label>
+          </div>
+        </div>
 
-            try {
-                // Show preview
-                document.getElementById('preview').style.display = 'block';
-                document.getElementById('previewDevice').textContent = deviceModel;
-                document.getElementById('previewGame').textContent = gameType === 'freefire' ? '🔥 Free Fire Biasa' : '⚡ Free Fire MAX';
-                document.getElementById('previewExpired').textContent = expiredDate;
-                document.getElementById('previewUser').textContent = userName;
+        <div class="settings-group">
+          <div class="settings-group-title">🔔 Notifikasi</div>
+          <div class="setting-item" onclick="event.stopPropagation()">
+            <div class="si-icon" style="background:rgba(0,230,118,0.1)"><span class="material-icons-round" style="color:var(--green)">person_add</span></div>
+            <div class="si-text"><div class="si-label">User Baru</div><div class="si-desc">Notif saat ada registrasi baru</div></div>
+            <label class="toggle-sw" onclick="playClick()"><input type="checkbox" checked><span class="sl"></span></label>
+          </div>
+          <div class="setting-item" onclick="event.stopPropagation()">
+            <div class="si-icon" style="background:rgba(255,215,64,0.1)"><span class="material-icons-round" style="color:var(--gold)">star</span></div>
+            <div class="si-text"><div class="si-label">Upgrade VIP</div><div class="si-desc">Notif upgrade status VIP</div></div>
+            <label class="toggle-sw" onclick="playClick()"><input type="checkbox"><span class="sl"></span></label>
+          </div>
+        </div>
 
-                // Generate encrypted module - Fix Unicode encoding
-                const moduleScript = generateModuleScript(deviceModel, gameType, expiredDate, userName);
-                
-                // Proper UTF-8 to Base64 encoding that handles Unicode
-                const encryptedModule = btoa(unescape(encodeURIComponent(moduleScript)));
+        <div class="settings-group">
+          <div class="settings-group-title">🎨 Tampilan & Suara</div>
+          <div class="setting-item" onclick="event.stopPropagation()">
+            <div class="si-icon" style="background:rgba(0,176,255,0.1)"><span class="material-icons-round" style="color:var(--blue-bright)">volume_up</span></div>
+            <div class="si-text"><div class="si-label">Efek Suara</div><div class="si-desc">Suara saat interaksi tombol</div></div>
+            <label class="toggle-sw" onclick="playClick()"><input type="checkbox" id="soundToggle" checked><span class="sl"></span></label>
+          </div>
+          <div class="setting-item" onclick="event.stopPropagation()">
+            <div class="si-icon" style="background:rgba(0,176,255,0.1)"><span class="material-icons-round" style="color:var(--blue-bright)">vibration</span></div>
+            <div class="si-text"><div class="si-label">Haptic Feedback</div><div class="si-desc">Getaran saat interaksi UI</div></div>
+            <label class="toggle-sw" onclick="playClick()"><input type="checkbox" checked><span class="sl"></span></label>
+          </div>
+        </div>
 
-                // Create ZIP
-                const zip = new JSZip();
-                const headtrickFolder = zip.folder("Headtrick");
+        <div class="settings-group">
+          <div class="settings-group-title">📱 Koneksi Sketchware</div>
+          <div class="setting-item" onclick="showSketchDialog()">
+            <div class="si-icon" style="background:rgba(0,176,255,0.1)"><span class="material-icons-round" style="color:var(--blue-bright)">phonelink</span></div>
+            <div class="si-text"><div class="si-label">WebView + JS Interface</div><div class="si-desc">Panduan koneksi ke Sketchware</div></div>
+            <span class="material-icons-round" style="color:var(--text3);font-size:18px">chevron_right</span>
+          </div>
+        </div>
 
-            // Add encrypted head.sh
-            headtrickFolder.file("head.sh", `#!/system/bin/sh
-# Encrypted Headtrick Module - DO NOT MODIFY
-# Decryption and execution
-eval "$(echo '${encryptedModule}' | base64 -d | python -c "import sys, urllib; print urllib.unquote(sys.stdin.read())" 2>/dev/null || echo '${encryptedModule}' | base64 -d)"
-`);
+        <div class="settings-group">
+          <div class="settings-group-title">ℹ️ Info Aplikasi</div>
+          <div class="setting-item" onclick="playClick();showToast('🚀 Versi terbaru!','system_update')">
+            <div class="si-icon" style="background:rgba(0,230,118,0.1)"><span class="material-icons-round" style="color:var(--green)">system_update</span></div>
+            <div class="si-text"><div class="si-label">Versi Aplikasi</div><div class="si-desc">v2.1.0 — Sudah terbaru</div></div>
+            <span class="material-icons-round" style="color:var(--text3);font-size:18px">chevron_right</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-            // Add uninstall.sh
-            headtrickFolder.file("uninstall.sh", `#!/system/bin/sh
-echo "🗑️ Uninstalling Headtrick Module..."
-sleep 1
+  <!-- BOTTOM NAV -->
+  <div class="nav-wrap">
+    <nav class="bottom-nav">
+      <div class="nav-item active" id="nav-database" onclick="switchPage('database',this)">
+        <div class="ni-icon"><span class="material-icons-round">storage</span></div>
+        <div class="ni-label">Database</div>
+      </div>
+      <div class="nav-item" id="nav-logs" onclick="switchPage('logs',this)">
+        <div class="ni-icon"><span class="material-icons-round">receipt_long</span></div>
+        <div class="ni-label">Logs</div>
+      </div>
+      <button class="nav-fab" onclick="openAddSheet()">
+        <span class="material-icons-round">add</span>
+      </button>
+      <div class="nav-item" id="nav-settings" onclick="switchPage('settings',this)">
+        <div class="ni-icon"><span class="material-icons-round">tune</span></div>
+        <div class="ni-label">Settings</div>
+      </div>
+      <div class="nav-item" id="nav-profile" onclick="switchPage('database',document.getElementById('nav-database'));showToast('👤 Profile','manage_accounts')">
+        <div class="ni-icon"><span class="material-icons-round">manage_accounts</span></div>
+        <div class="ni-label">Profile</div>
+      </div>
+    </nav>
+  </div>
+</div>
 
-# Reset settings
-settings put system touch.distance.scale 1.0
-settings put system touch.size.scale 1.0
-settings put system pointer_speed 0
-settings put system touch.pressure.scale 1.0
-settings put secure long_press_timeout 500
-settings put secure tap_duration_threshold 0.4
+<div class="backdrop" id="backdrop"></div>
+<div class="toast" id="toast"><span class="material-icons-round" style="font-size:16px" id="toastIcon">info</span><span id="toastMsg"></span></div>
 
-echo "✅ Headtrick Module Uninstalled Successfully"
-echo "👋 Thank you for using Headtrick!"
-`);
+<!-- MENU SHEET -->
+<div class="bsheet" id="menuSheet">
+  <div class="sheet-pill"></div>
+  <div class="sheet-hdr">
+    <div>
+      <div class="sheet-title" id="menuTitle">Username</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px" id="menuMeta"></div>
+    </div>
+    <button class="close-btn" onclick="closeSheet('menuSheet')"><span class="material-icons-round">close</span></button>
+  </div>
+  <div style="margin-top:14px">
+    <div class="menu-item" onclick="doEdit()">
+      <div class="mi-icon" style="background:rgba(21,101,192,0.2)"><span class="material-icons-round" style="color:var(--blue-bright)">edit</span></div>
+      <div class="mi-text"><div class="mt">Edit Akun</div><div class="ms">Ubah nama, password, role & status</div></div>
+      <span class="material-icons-round mi-arrow">chevron_right</span>
+    </div>
+    <div class="menu-item" onclick="doToggleVip()">
+      <div class="mi-icon" style="background:rgba(255,215,64,0.1)"><span class="material-icons-round" style="color:var(--gold)">star</span></div>
+      <div class="mi-text"><div class="mt" id="vipLabel">Toggle VIP</div><div class="ms">Aktifkan atau cabut status VIP</div></div>
+      <span class="material-icons-round mi-arrow">chevron_right</span>
+    </div>
+    <div class="menu-item" onclick="doToggleStatus()">
+      <div class="mi-icon" style="background:rgba(0,230,118,0.08)" id="statusMenuIconWrap"><span class="material-icons-round" style="color:var(--green)" id="statusMenuIcon">toggle_on</span></div>
+      <div class="mi-text"><div class="mt" id="statusLabel">Toggle Status</div><div class="ms">Aktifkan atau nonaktifkan akun</div></div>
+      <span class="material-icons-round mi-arrow">chevron_right</span>
+    </div>
+    <div class="menu-item" onclick="doDelete()">
+      <div class="mi-icon" style="background:rgba(255,61,113,0.1)"><span class="material-icons-round" style="color:var(--red)">delete_forever</span></div>
+      <div class="mi-text"><div class="mt" style="color:var(--red)">Hapus Akun</div><div class="ms">Aksi permanen tidak dapat dibatalkan</div></div>
+      <span class="material-icons-round mi-arrow">chevron_right</span>
+    </div>
+  </div>
+</div>
 
-            // Add command.txt with emojis
-            headtrickFolder.file("command.txt", `╔═══════════════════════════════════════════════════╗
-║           🎮 HEADTRICK MODULE COMMANDS 🎮          ║
-║                  Developer: Lana Official          ║
-╚═══════════════════════════════════════════════════╝
+<!-- EDIT/ADD SHEET -->
+<div class="bsheet" id="editSheet">
+  <div class="sheet-pill"></div>
+  <div class="sheet-hdr">
+    <div class="sheet-title" id="editTitle">Tambah Akun</div>
+    <button class="close-btn" onclick="closeSheet('editSheet')"><span class="material-icons-round">close</span></button>
+  </div>
+  <div id="editBadge" style="margin:4px 0 14px"></div>
+  <div class="form-group">
+    <label class="form-label">Username</label>
+    <input class="form-input" id="fName" type="text" placeholder="Masukkan username..." autocomplete="off">
+  </div>
+  <div class="form-group">
+    <label class="form-label">Password</label>
+    <input class="form-input" id="fPass" type="password" placeholder="Password akun...">
+  </div>
+  <div class="form-group">
+    <label class="form-label">Role</label>
+    <select class="form-select" id="fRole">
+      <option value="User">👤 User</option>
+      <option value="Moderator">🛡️ Moderator</option>
+      <option value="Admin">⚙️ Admin</option>
+      <option value="Owner">👑 Owner</option>
+    </select>
+  </div>
+  <div class="toggle-row">
+    <div class="tl-info"><div class="tl">Status Aktif</div><div class="ts">Nonaktifkan jika akun bermasalah</div></div>
+    <label class="toggle-sw" onclick="event.stopPropagation();playClick()"><input type="checkbox" id="fStatus" checked><span class="sl"></span></label>
+  </div>
+  <div class="toggle-row">
+    <div class="tl-info"><div class="tl">VIP Access</div><div class="ts">Akses ke fitur premium</div></div>
+    <label class="toggle-sw" onclick="event.stopPropagation();playClick()"><input type="checkbox" id="fVip"><span class="sl"></span></label>
+  </div>
+  <div class="sheet-actions">
+    <button class="btn btn-outline" onclick="closeSheet('editSheet')"><span class="material-icons-round btn-icon">close</span> Batal</button>
+    <button class="btn btn-primary" onclick="saveUser()"><span class="material-icons-round btn-icon">save</span> Simpan</button>
+  </div>
+</div>
 
-📱 Device Model: ${deviceModel}
-🎮 Game Type: ${gameType === 'freefire' ? 'Free Fire Biasa' : 'Free Fire MAX'}
-⏰ Expired Date: ${expiredDate}
-👤 User: ${userName}
+<!-- DELETE DIALOG -->
+<div class="dialog-wrap" id="delDialog">
+  <div class="dialog">
+    <div class="dialog-icon">🗑️</div>
+    <div class="dialog-title">Hapus Akun?</div>
+    <div class="dialog-body">Akun <b id="delName" style="color:var(--blue-bright)"></b> akan dihapus secara permanen. Aksi ini tidak bisa dibatalkan.</div>
+    <div class="dialog-actions">
+      <button class="btn btn-outline" onclick="closeDialog('delDialog')">Batal</button>
+      <button class="btn btn-danger" onclick="confirmDelete()"><span class="material-icons-round btn-icon">delete</span> Hapus</button>
+    </div>
+  </div>
+</div>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<!-- SKETCHWARE DIALOG -->
+<div class="dialog-wrap" id="sketchDialog">
+  <div class="dialog" style="max-width:380px">
+    <div class="dialog-icon">📱</div>
+    <div class="dialog-title">Connect ke Sketchware</div>
+    <div class="dialog-body" style="text-align:left">
+      <b style="color:var(--blue-bright)">Cara koneksi:</b><br><br>
+      1. Tambahkan komponen <b>WebView</b><br>
+      2. Di onCreate:<br>
+      <code style="background:rgba(0,0,0,0.4);padding:4px 8px;border-radius:6px;font-size:10px;display:block;margin:4px 0;font-family:'JetBrains Mono',monospace">webview.setJavaScriptEnabled(true)
+webview.addJavascriptInterface(
+  new JSBridge(this), "Android")</code>
+      3. Load file HTML dari assets<br>
+      4. Di HTML panggil: <code style="color:var(--blue-bright);font-family:'JetBrains Mono',monospace;font-size:10px">Android.saveUser(json)</code>
+    </div>
+    <div class="dialog-actions">
+      <button class="btn btn-primary" onclick="closeDialog('sketchDialog')">Mengerti!</button>
+    </div>
+  </div>
+</div>
 
-🚀 CARA INSTALL & JALANKAN MODULE:
+<script>
+// AUDIO
+let audioCtx;
+const soundOn = () => document.getElementById('soundToggle')?.checked !== false;
+function getCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+function tone(freq, type, dur, vol=0.07) {
+  if (!soundOn()) return;
+  try {
+    const c = getCtx(), o = c.createOscillator(), g = c.createGain();
+    o.type = type; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol, c.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + dur);
+    o.connect(g); g.connect(c.destination); o.start(); o.stop(c.currentTime + dur);
+  } catch(e){}
+}
+function playClick() { tone(660,'sine',0.08,0.06); }
+function playOpen() { [440,550,660].forEach((f,i)=>setTimeout(()=>tone(f,'sine',0.1,0.07),i*60)); }
+function playClose() { [550,440,330].forEach((f,i)=>setTimeout(()=>tone(f,'sine',0.09,0.07),i*55)); }
+function playSave() { [523,659,784].forEach((f,i)=>setTimeout(()=>tone(f,'triangle',0.13,0.09),i*80)); }
+function playDelete() { [300,220,160].forEach((f,i)=>setTimeout(()=>tone(f,'sawtooth',0.15,0.08),i*70)); }
+function playError() { tone(220,'sawtooth',0.25,0.1); }
+function playNav() { tone(500,'sine',0.07,0.06); setTimeout(()=>tone(620,'sine',0.09,0.06),60); }
 
-1️⃣ Pastikan folder Headtrick ada di /sdcard/
-2️⃣ Buka Terminal/Termux
-3️⃣ Copy command di bawah ini:
+// DATA
+let users = [
+  {id:1,name:'LanaOfficial',pass:'lana123',role:'Owner',status:'active',vip:true},
+  {id:2,name:'RafexceAdmin',pass:'admin99',role:'Admin',status:'active',vip:true},
+  {id:3,name:'UserAlpha',pass:'alpha1',role:'User',status:'active',vip:false},
+  {id:4,name:'UserBeta',pass:'beta22',role:'User',status:'inactive',vip:false},
+  {id:5,name:'PremiumX',pass:'prem0',role:'Moderator',status:'active',vip:true},
+];
+let logs = [];
+let editingId = null;
+let menuTarget = null;
+let openSheets = [];
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function nid() { return Date.now() + Math.random(); }
 
-📦 UNTUK MENJALANKAN MODULE:
+function addLog(type, msg, sub='') {
+  const t = new Date().toLocaleTimeString('id-ID',{hour12:false});
+  logs.unshift({type,msg,sub,time:t});
+  if (logs.length > 60) logs.pop();
+  if (document.getElementById('page-logs').classList.contains('active')) renderLogs();
+}
 
-sh /sdcard/Headtrick/head.sh
+// RENDER USERS
+function renderUsers() {
+  const list = document.getElementById('userList');
+  document.getElementById('st-total').textContent = users.length;
+  document.getElementById('st-active').textContent = users.filter(u=>u.status==='active').length;
+  document.getElementById('st-vip').textContent = users.filter(u=>u.vip).length;
+  document.getElementById('last-update').textContent = new Date().toLocaleTimeString('id-ID',{hour12:false});
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  if (!users.length) {
+    list.innerHTML = '<div class="empty-state"><span class="material-icons-round">person_off</span><p>Belum ada user</p></div>';
+    return;
+  }
+  list.innerHTML = '';
+  users.forEach(u => {
+    const d = document.createElement('div');
+    d.className = 'user-card status-' + u.status;
+    const on = u.status === 'active';
+    d.innerHTML = `
+      <div class="av">${u.name.substring(0,2).toUpperCase()}<div class="av-dot ${on?'on':'off'}"></div></div>
+      <div class="user-info">
+        <div class="user-uname">${u.name}</div>
+        <div class="user-meta">
+          <span class="chip chip-${u.status}">${on?'● Online':'● Offline'}</span>
+          <span class="chip chip-role">${u.role}</span>
+          ${u.vip?'<span class="chip chip-vip">★ VIP</span>':''}
+        </div>
+      </div>
+      <button class="more-btn" onclick="openMenu(${JSON.stringify(u.id)},event)">
+        <span class="material-icons-round">more_vert</span>
+      </button>`;
+    list.appendChild(d);
+  });
+}
 
-🗑️ UNTUK UNINSTALL MODULE:
+// RENDER LOGS
+function renderLogs() {
+  const el = document.getElementById('logList');
+  if (!logs.length) {
+    el.innerHTML = '<div class="empty-state" style="padding:24px"><span class="material-icons-round">history_toggle_off</span><p>Belum ada aktivitas</p></div>';
+    return;
+  }
+  const bg = {add:'rgba(0,230,118,0.1)',edit:'rgba(0,176,255,0.1)',delete:'rgba(255,61,113,0.1)',vip:'rgba(255,215,64,0.1)',status:'rgba(21,101,192,0.1)'};
+  const ic = {add:'person_add',edit:'edit',delete:'delete',vip:'star',status:'toggle_on'};
+  const co = {add:'var(--green)',edit:'var(--blue-bright)',delete:'var(--red)',vip:'var(--gold)',status:'var(--blue-bright)'};
+  el.innerHTML = logs.map(l=>`
+    <div class="log-item">
+      <div class="log-icon" style="background:${bg[l.type]||bg.edit}"><span class="material-icons-round" style="color:${co[l.type]||'var(--text2)'}">${ic[l.type]||'info'}</span></div>
+      <div style="flex:1"><div class="log-msg">${l.msg}</div><div class="log-sub">${l.sub}</div></div>
+      <div class="log-time">${l.time}</div>
+    </div>`).join('');
+}
 
-sh /sdcard/Headtrick/uninstall.sh
+function clearLogs() {
+  playClick();
+  logs = [];
+  renderLogs();
+  showToast('🗑️ Log dibersihkan','delete_sweep');
+}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// NAV
+function switchPage(name, el) {
+  playNav();
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  el.classList.add('active');
+  if (name==='logs') renderLogs();
+}
 
-⚠️ PENTING:
-✅ Module ini NON ROOT SAFE
-✅ Tidak perlu akses ROOT
-✅ Work di semua device Android
-✅ Sudah dienkripsi untuk keamanan
-⚠️ Jangan modifikasi file head.sh
-⚠️ Module akan expired pada: ${expiredDate}
+// MENU
+function openMenu(uid, e) {
+  e.stopPropagation();
+  playOpen();
+  menuTarget = users.find(u=>u.id===uid);
+  if (!menuTarget) return;
+  const on = menuTarget.status==='active';
+  document.getElementById('menuTitle').textContent = menuTarget.name;
+  document.getElementById('menuMeta').textContent = `${menuTarget.role} · ${on?'🟢 Online':'🔴 Offline'}`;
+  document.getElementById('vipLabel').textContent = menuTarget.vip ? '⭐ Cabut VIP' : '⭐ Aktifkan VIP';
+  document.getElementById('statusLabel').textContent = on ? '🔴 Nonaktifkan Akun' : '🟢 Aktifkan Akun';
+  document.getElementById('statusMenuIcon').textContent = on ? 'toggle_off' : 'toggle_on';
+  document.getElementById('statusMenuIcon').style.color = on ? 'var(--red)' : 'var(--green)';
+  showSheet('menuSheet');
+}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function doEdit() {
+  if (!menuTarget) return;
+  editingId = menuTarget.id;
+  document.getElementById('editTitle').textContent = 'Edit Akun';
+  document.getElementById('fName').value = menuTarget.name;
+  document.getElementById('fPass').value = menuTarget.pass;
+  document.getElementById('fRole').value = menuTarget.role;
+  document.getElementById('fStatus').checked = menuTarget.status==='active';
+  document.getElementById('fVip').checked = menuTarget.vip;
+  document.getElementById('editBadge').innerHTML = `<span class="chip chip-${menuTarget.status}" style="font-size:10px">● Akun ${menuTarget.status==='active'?'Aktif':'Nonaktif'}</span>`;
+  closeSheet('menuSheet');
+  setTimeout(()=>showSheet('editSheet'),200);
+}
 
-💡 TIPS:
-- Restart game setelah apply module
-- Gunakan command uninstall sebelum update
-- Backup settings game sebelum install
+function doToggleVip() {
+  const u = users.find(u=>u.id===menuTarget.id);
+  if(!u) return;
+  u.vip = !u.vip;
+  addLog('vip', u.vip ? '★ VIP diaktifkan' : '★ VIP dicabut', u.name);
+  playClick();
+  closeSheet('menuSheet');
+  renderUsers();
+  showToast(u.vip?'⭐ VIP diaktifkan':'❌ VIP dicabut','star');
+}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function doToggleStatus() {
+  const u = users.find(u=>u.id===menuTarget.id);
+  if(!u) return;
+  u.status = u.status==='active'?'inactive':'active';
+  addLog('status',`Status → ${u.status}`, u.name);
+  playClick();
+  closeSheet('menuSheet');
+  renderUsers();
+  showToast(u.status==='active'?'🟢 Akun diaktifkan':'🔴 Akun dinonaktifkan','toggle_on');
+}
 
-📞 SUPPORT:
-Developer: Lana Official
-Version: 1.1.1
+function doDelete() {
+  closeSheet('menuSheet');
+  setTimeout(()=>{ document.getElementById('delName').textContent=menuTarget.name; showDialog('delDialog'); },220);
+}
 
-╔═══════════════════════════════════════════════════╗
-║        🌟 THANK YOU FOR USING HEADTRICK 🌟        ║
-╚═══════════════════════════════════════════════════╝
-`);
+function confirmDelete() {
+  playDelete();
+  const nm = menuTarget.name;
+  users = users.filter(u=>u.id!==menuTarget.id);
+  addLog('delete','Akun dihapus',nm);
+  closeDialog('delDialog');
+  renderUsers();
+  showToast('🗑️ '+nm+' dihapus','delete');
+}
 
-            // Add README.md
-            headtrickFolder.file("README.md", `# 🎮 HEADTRICK MODULE
+// ADD
+function openAddSheet() {
+  playOpen();
+  editingId = null;
+  document.getElementById('editTitle').textContent = 'Tambah Akun Baru';
+  document.getElementById('fName').value='';
+  document.getElementById('fPass').value='';
+  document.getElementById('fRole').value='User';
+  document.getElementById('fStatus').checked=true;
+  document.getElementById('fVip').checked=false;
+  document.getElementById('editBadge').innerHTML='<span class="chip chip-active" style="font-size:10px">● Akun Baru</span>';
+  showSheet('editSheet');
+}
 
-## 📱 Device Information
-- **Device Model:** ${deviceModel}
-- **Game Type:** ${gameType === 'freefire' ? 'Free Fire Biasa' : 'Free Fire MAX'}
-- **User:** ${userName}
-- **Expired Date:** ${expiredDate}
+function saveUser() {
+  const name = document.getElementById('fName').value.trim();
+  const pass = document.getElementById('fPass').value.trim();
+  const role = document.getElementById('fRole').value;
+  const status = document.getElementById('fStatus').checked?'active':'inactive';
+  const vip = document.getElementById('fVip').checked;
+  if (!name) { playError(); showToast('❗ Username wajib diisi','error'); return; }
+  if (!pass && editingId===null) { playError(); showToast('❗ Password wajib diisi','error'); return; }
+  if (editingId!==null) {
+    const u = users.find(u=>u.id===editingId);
+    if(u){u.name=name;if(pass)u.pass=pass;u.role=role;u.status=status;u.vip=vip;}
+    addLog('edit','Akun diperbarui',name);
+    showToast('✅ Akun berhasil diperbarui','check');
+  } else {
+    if (users.find(u=>u.name.toLowerCase()===name.toLowerCase())) { playError(); showToast('❗ Username sudah ada','error'); return; }
+    users.unshift({id:nid(),name,pass,role,status,vip});
+    addLog('add','Akun baru dibuat',name+' · '+role);
+    showToast('✅ Akun '+name+' dibuat!','person_add');
+  }
+  playSave();
+  closeSheet('editSheet');
+  renderUsers();
+}
 
-## ✨ Features
-- ✅ Easy Drag
-- ✅ Optimize Sensitivity
-- ✅ Aim On Point
-- ✅ Aim Drag
-- ✅ Sensitivity Control
-- ✅ Accuracy Aim
+// SHEETS & DIALOGS
+function showSheet(id) {
+  document.getElementById('backdrop').classList.add('show');
+  document.getElementById(id).classList.add('show');
+  if(!openSheets.includes(id)) openSheets.push(id);
+}
+function closeSheet(id) {
+  playClose();
+  document.getElementById(id).classList.remove('show');
+  openSheets = openSheets.filter(s=>s!==id);
+  if(!openSheets.length) document.getElementById('backdrop').classList.remove('show');
+}
+function showDialog(id) { playOpen(); document.getElementById(id).classList.add('show'); }
+function closeDialog(id) { playClose(); document.getElementById(id).classList.remove('show'); }
+function closeAll() {
+  playClose();
+  openSheets.forEach(s=>document.getElementById(s)?.classList.remove('show'));
+  openSheets=[];
+  document.getElementById('backdrop').classList.remove('show');
+}
+function showSketchDialog() { playOpen(); showDialog('sketchDialog'); }
 
-## 🚀 Installation
-\`\`\`bash
-sh /sdcard/Headtrick/head.sh
-\`\`\`
+// TOAST
+let toastTmr;
+function showToast(msg, icon='info') {
+  document.getElementById('toastMsg').textContent = msg;
+  document.getElementById('toastIcon').textContent = icon;
+  const t = document.getElementById('toast');
+  clearTimeout(toastTmr);
+  t.classList.add('show');
+  toastTmr = setTimeout(()=>t.classList.remove('show'),2500);
+}
 
-## 🗑️ Uninstall
-\`\`\`bash
-sh /sdcard/Headtrick/uninstall.sh
-\`\`\`
+// INPUT SOUNDS
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.form-input,.form-select').forEach(el=>{
+    el.addEventListener('input',()=>tone(880,'sine',0.04,0.03));
+  });
+  document.getElementById('backdrop').addEventListener('click',closeAll);
+  renderUsers();
+  addLog('status','Admin Panel aktif','Lana Official · v2.1.0');
+  renderLogs();
+});
 
-## ⚠️ Notes
-- NON ROOT SAFE
-- Encrypted Module
-- Do not modify head.sh file
-
----
-**Developer:** Lana Official | **Version:** 1.1.1
-`);
-
-                            // Generate and download ZIP with better mobile compatibility
-                btn.textContent = '📦 Creating ZIP...';
-                
-                const content = await zip.generateAsync({
-                    type: "blob",
-                    compression: "DEFLATE",
-                    compressionOptions: {
-                        level: 9
-                    }
-                });
-                
-                btn.textContent = '💾 Downloading...';
-                
-                // Create filename
-                const filename = `Headtrick_${gameType}_${deviceModel.replace(/\s+/g, '_')}_${expiredDate}.zip`;
-                
-                // Try multiple download methods for better compatibility
-                if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                    // IE/Edge
-                    window.navigator.msSaveOrOpenBlob(content, filename);
-                } else {
-                    // Modern browsers
-                    const url = URL.createObjectURL(content);
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.download = filename;
-                    link.style.display = 'none';
-                    
-                    document.body.appendChild(link);
-                    
-                    // Trigger download
-                    link.click();
-                    
-                    // Cleanup after delay
-                    setTimeout(() => {
-                        document.body.removeChild(link);
-                        URL.revokeObjectURL(url);
-                    }, 250);
-                }
-
-                // Success message
-                setTimeout(() => {
-                    alert('🎉 SUCCESS!\n\n✅ Module berhasil di-generate!\n📦 File ZIP: ' + filename + '\n🔒 Module sudah terenkripsi\n\n💾 Cek folder Download Anda!');
-                    btn.textContent = originalText;
-                    btn.disabled = false;
-                }, 300);
-
-            } catch (error) {
-                console.error('Error:', error);
-                alert('❌ ERROR!\n\nGagal generate module:\n' + error.message + '\n\n🔄 Silakan coba lagi');
-                btn.textContent = originalText;
-                btn.disabled = false;
-            }
-        });
-
-        function generateModuleScript(device, game, expired, user) {
-            return `#!/system/bin/sh
-# =========================================================
-# ╔══════════════════════════════════════════════════════╗
-# ║                   HEADTRICK MODULE                   ║
-# ║              Developer : Lana Official               ║
-# ║                  Version : 1.1.1                     ║
-# ║                Mode : NON ROOT SAFE                  ║
-# ╚══════════════════════════════════════════════════════╝
-# =========================================================
-
-# Check Expiration
-EXPIRED_DATE="${expired}"
-CURRENT_DATE=$(date +%Y-%m-%d)
-
-if [ "$(date -d "$CURRENT_DATE" +%s)" -gt "$(date -d "$EXPIRED_DATE" +%s)" 2>/dev/null ]; then
-    echo "❌ MODULE EXPIRED!"
-    echo "⏰ Expired Date: $EXPIRED_DATE"
-    echo "📞 Contact Developer: Lana Official"
-    exit 1
-fi
-
-clear
-
-# =============================== LOGO ===============================
-echo "██╗  ██╗███████╗ █████╗ ██████╗ "
-echo "██║  ██║██╔════╝██╔══██╗██╔══██╗"
-echo "███████║█████╗  ███████║██║  ██║"
-echo "██╔══██║██╔══╝  ██╔══██║██║  ██║"
-echo "██║  ██║███████╗██║  ██║██████╔╝"
-echo "╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═════╝ "
-echo "           HEADTRICK"
-echo "    Developer : Lana Official"
-echo ""
-
-# =============================== USER INFO ===============================
-echo "╔════════════ USER INFO ════════════╗"
-echo " 👤 User     : ${user}"
-echo " 📱 Device   : ${device}"
-echo " 🎮 Game     : ${game === 'freefire' ? 'Free Fire Biasa' : 'Free Fire MAX'}"
-echo " ⏰ Expired  : ${expired}"
-echo "╚═══════════════════════════════════╝"
-echo ""
-
-# =============================== DEVICE INFO ===============================
-echo "╔════════════ DEVICE INFO ════════════╗"
-echo " 📱 Brand    : $(getprop ro.product.brand)"
-echo " 📲 Model    : $(getprop ro.product.model)"
-echo " 🤖 Android  : $(getprop ro.build.version.release)"
-echo " ⚙️  Kernel   : $(uname -r)"
-echo " 🔧 ABI      : $(getprop ro.product.cpu.abi)"
-echo "╚══════════════════════════════════════╝"
-echo ""
-sleep 1
-
-# =============================== LOADING BAR ===============================
-echo "╔════════════ APPLYING MODULE ════════════╗"
-for i in 10 20 30 40 50 60 70 80 90 100; do
-    printf "⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛ %s%%\r" "$i"
-    sleep 0.2
-done
-echo ""
-echo "╚═════════════════════════════════════════╝"
-echo ""
-
-# =============================== FEATURES ===============================
-echo "╔════════════ FEATURES ACTIVE ════════════╗"
-echo " 🎯 Easy Drag           : ACTIVE ✅"
-echo " ⚡ Optimize Sensitivity : ACTIVE ✅"
-echo " 🎯 Aim On Point        : ACTIVE ✅"
-echo " 🎯 Aim Drag            : ACTIVE ✅"
-echo " 🎮 Sensitivity Control : ACTIVE ✅"
-echo " 🎯 Accuracy Aim        : ACTIVE ✅"
-echo "╚══════════════════════════════════════════╝"
-echo ""
-
-# =============================== OPTIMIZATION ===============================
-# Easy Drag & Stability
-settings put system touch.distance.scale 0.85
-settings put system touch.size.scale 0.75
-
-# Sensitivity Precision
-settings put system pointer_speed 7
-settings put system touch.pressure.scale 0.001
-
-# Aim Accuracy
-setprop debug.input.low_latency 1
-setprop debug.performance.tuning 1
-setprop debug.hwui.renderer skiagl
-setprop debug.hwui.disable_vsync false
-
-# Touch consistency
-settings put secure long_press_timeout 300
-settings put secure tap_duration_threshold 0.2
-
-# =============================== STATUS ===============================
-echo ""
-echo "╔════════════ STATUS ════════════╗"
-echo " 📦 Module   : HEADTRICK"
-echo " 🔒 Mode     : NON ROOT SAFE"
-echo " ✅ Status   : ACTIVE (NO ERROR)"
-echo " 👨‍💻 Dev      : Lana Official"
-echo " 👤 User     : ${user}"
-echo "╚═════════════════════════════════╝"
-echo ""
-echo "✅ HEADTRICK APPLIED SUCCESSFULLY"
-echo "🎮 Enjoy your ${game === 'freefire' ? 'Free Fire' : 'Free Fire MAX'} gameplay!"
-echo ""
-sleep 2
-`;
-        }
-    </script>
+// AUTO REFRESH
+setInterval(renderUsers, 30000);
+</script>
 </body>
 </html>
